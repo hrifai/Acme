@@ -19,6 +19,14 @@
 
     </v-navigation-drawer>
 
+    <v-content>
+      <v-layout align-center justify-center fill-height>
+        <v-container>
+          <router-view></router-view>
+        </v-container>
+      </v-layout>
+    </v-content>
+
     <v-app-bar app clipped-left >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Acme Studios.</v-toolbar-title>
@@ -38,9 +46,9 @@
         data: () => ({
             drawer: null,
             menuItems:[
-                {text: "Dashboard", icon: "dashboard"},
-                {text: "Settings", icon: "settings"},
-                {text: "Menu", icon: "home"}
+                {text: "Menu", icon: "fa-home"},
+                {text: "Dashboard", icon: "fa-dashboard"},
+                {text: "Settings", icon: "fa-cog"}
             ]
         }),
         created () {
