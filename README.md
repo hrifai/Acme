@@ -1,4 +1,4 @@
-# jpp
+# AcmeStudios
 
 ## Project setup
 ```
