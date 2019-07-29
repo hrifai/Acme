@@ -5,7 +5,7 @@
       <v-list dense>
 
         <v-layout v-for="item in menuItems" :key="item.text">
-          <v-list-item @click="">
+          <v-list-item @click="$router.push(item.route)">
             <v-list-item-action>
               <v-icon>{{item.icon}}</v-icon>
             </v-list-item-action>
@@ -46,9 +46,11 @@
         data: () => ({
             drawer: null,
             menuItems:[
-                {text: "Menu", icon: "fa-home"},
-                {text: "Dashboard", icon: "fa-dashboard"},
-                {text: "Settings", icon: "fa-cog"}
+                {text: "Menu", icon: "fa-home", route: "/"},
+                {text: "View Quiz's", icon: "fa-dashboard", route: "/quizs"},
+                {text: "New Quiz", icon: "fa-plus", route: "/new-quiz"},
+                {text: "View Results", icon: "fa-book", route: "/results"},
+                {text: "Edit Profile", icon: "fa-cog", route: "/settings"}
             ]
         }),
         created () {
