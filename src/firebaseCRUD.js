@@ -31,10 +31,11 @@ var Questions = function(question, options, img){
     this.img = img;
 };
 
-var Quiz = function(name, questions, owner){
+var Quiz = function(name, questions, owner,img = "https://www.civhc.org/wp-content/uploads/2018/10/question-mark.png"){
     this.name = name;
     this.questions = questions;
     this.owner = owner;
+    this.img = img;
 };
 
 utils.database = app.database();
@@ -46,8 +47,8 @@ utils.newUser = function(name,dob,password,email){
     return reciept.key;
 };
 
-utils.newQuiz = function(name, questions, owner){
-    var quiz = new Quiz(name, questions, owner);
+utils.newQuiz = function(name, questions, owner, img){
+    var quiz = new Quiz(name, questions, owner, img);
     var reciept = utils.database.ref('/Quizs').push(quiz);
     return reciept.key;
 };
@@ -55,9 +56,12 @@ utils.newQuiz = function(name, questions, owner){
 utils.getQuizs = function(){
     return new Promise((resolve) => {
         var quizs = [];
-        utils.database.ref('/Quizs').once('value', (quiz) => {
-            quiz.forEach()
-        })
+        utils.database.ref('/Quizs').once('value', (snap) => {
+            snap.forEach((quiz) => {
+                quizs.push(quiz.val())
+            })
+        });
+        resolve(quizs);
     })
 };
 
@@ -89,7 +93,6 @@ utils.init = function(){
 
 };
 
-utils.init();
 
 // axios.post('https://us-central1-acmestudios-ca284.cloudfunctions.net/authenticateUser', {
 //     email: 'test',
@@ -100,5 +103,4 @@ utils.init();
 //     console.log(error);
 // });
 
-
-// export default utils;
+export default utils;

@@ -4,12 +4,10 @@
 
       <v-flex>
           <v-container grid-list-md>
-              <v-layout v-for="quiz in quizs" :key="quiz.name">
-                  <v-content wrap>
-                      <v-flex xs6>
+              <v-layout row wrap>
+                      <v-flex xs4 v-for="quiz in quizs" :key="quiz.name">
                             <button-card @click.native="showDialog(quiz.results)" :img="quiz.img" :text="quiz.name"></button-card>
                       </v-flex>
-                  </v-content>
               </v-layout>
           </v-container>
       </v-flex>

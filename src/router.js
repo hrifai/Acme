@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import NewQuiz from './views/New-Quiz'
 import Results from './views/Results'
 import Login from './views/Login'
+import Quizs from './views/ViewQuiz'
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ export default new Router({
           path: '/login',
           name: 'login',
           component: Login
+      },
+      {
+          path: '/quizs',
+          name: 'quiz',
+          component: Quizs
       }
   ]
 })
