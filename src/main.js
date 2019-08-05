@@ -10,3 +10,10 @@ new Vue({
   vuetify,
   render: function (h) { return h(App) }
 }).$mount('#app');
+
+
+Vue.use(vuetify, {
+    theme: {
+        primary: "#6d1dc2"
+    }
+});

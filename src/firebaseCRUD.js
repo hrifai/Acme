@@ -1,5 +1,5 @@
 var firebase = require('firebase');
-// import axios from 'axios';
+import axios from 'axios';
 
 var utils = {};
 
