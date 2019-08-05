@@ -4,6 +4,16 @@
 
       <v-list dense>
 
+        <v-list-item>
+          <v-list-item-action>
+            <v-icon>fa-user-circle</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-tile-title>Hani Rifai</v-list-tile-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-layout v-for="item in menuItems" :key="item.text">
           <v-list-item @click="$router.push(item.route)">
             <v-list-item-action>
@@ -14,6 +24,17 @@
             </v-list-item-content>
           </v-list-item>
         </v-layout>
+
+        <v-spacer></v-spacer>
+
+        <v-list-item class="mt-3">
+            <v-list-item-action>
+              <v-icon>fa-sign-in</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Log Out</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
       </v-list>
 
@@ -27,7 +48,7 @@
       </v-layout>
     </v-content>
 
-    <v-app-bar app clipped-left >
+    <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Acme Studios.</v-toolbar-title>
     </v-app-bar>
@@ -44,7 +65,7 @@
             source: String,
         },
         data: () => ({
-            drawer: null,
+            drawer: false,
             menuItems:[
                 {text: "Menu", icon: "fa-home", route: "/"},
                 {text: "View Quiz's", icon: "fa-dashboard", route: "/quizs"},

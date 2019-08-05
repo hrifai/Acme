@@ -1,5 +1,6 @@
-var firebase = require('firebase');
-import axios from 'axios';
+const firebase = require('firebase');
+const axios = require('axios');
+const md5 = require('md5');
 
 var utils = {};
 
@@ -17,7 +18,7 @@ var User = function(name, dob, password, email){
     this.email = email;
     this.name = name;
     this.dob = dob;
-    this.password = password;
+    this.password = md5(password);
     this.logs = {
         login: [],
         logout: []
@@ -42,7 +43,7 @@ utils.database = app.database();
 utils.newUser = function(name,dob,password,email){
     var user = new User(name, dob, password, email);
     var reciept = utils.database.ref('/Users').push(user);
-    return reciept;
+    return reciept.key;
 };
 
 utils.newQuiz = function(){
@@ -59,5 +60,32 @@ utils.playQuiz = function(){
 
 };
 
+utils.init = function(){
+    console.log(utils.newUser('Hani','03/31/2000','123','hani@rifai.net'));
+    console.log(utils.newUser('Tim','03/31/2000','345','tim@test.net'));
+    console.log(utils.newUser('James','03/31/2000','678','james@test.net'));
 
-export default utils;
+
+    // utils.database.ref('/Users').push(hani);
+    // utils.database.ref('/Users').push(tim);
+    // utils.database.ref('/Users').push(james);
+
+    // var quiz1 = new Quiz();
+    // var quiz2 = new Quiz();
+    // var quiz3 = new Quiz();
+};
+
+utils.init();
+
+//
+// axios.post('https://us-central1-acmestudios-ca284.cloudfunctions.net/authenticateUser', {
+//     email: 'test',
+//     password: '123'
+// }).then(response => {
+//     console.log(response.data);
+// }).catch(error => {
+//     console.log(error);
+// });
+
+
+// export default utils;

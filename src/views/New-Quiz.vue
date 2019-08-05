@@ -3,12 +3,11 @@
     <v-layout justify-center align-center class="headline">Create A New Quiz</v-layout>
       <v-layout justify-left class="subtitle-1 pb-3">Add Questions</v-layout>
 
-      <v-flex v-for="questions in questionBank" :key="question.id">
+      <v-flex v-for="question in questionBank" :key="question.id">
           <v-container>
               <v-card>
                 <v-card-title class="justify-center">Question 1</v-card-title>
                   <v-content>
-
                   </v-content>
               </v-card>
           </v-container>

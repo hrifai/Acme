@@ -1,5 +1,11 @@
 # AcmeStudios
 
+## View Firebase Hosted Version
+
+```
+https://acmestudios-ca284.web.app/
+```
+
 ## Project setup
 ```
 npm install
