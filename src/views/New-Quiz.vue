@@ -14,7 +14,7 @@
       </v-flex>
 
       <v-btn fab bottom left absolute color="purple" @click="questionBank.push(1)"><v-icon>fa-plus</v-icon></v-btn>
-      <v-btn fab bottom right absolute color="green" @click="save()"><v-icon></v-icon></v-btn>
+      <v-btn fab bottom right absolute color="green" @click="save()"><v-icon>fa-check-circle</v-icon></v-btn>
 
   </div>
 </template>

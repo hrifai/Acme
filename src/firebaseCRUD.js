@@ -46,14 +46,19 @@ utils.newUser = function(name,dob,password,email){
     return reciept.key;
 };
 
-utils.newQuiz = function(){
+utils.newQuiz = function(name, questions, owner){
     var quiz = new Quiz(name, questions, owner);
     var reciept = utils.database.ref('/Quizs').push(quiz);
-    return reciept.val()
+    return reciept.key;
 };
 
 utils.getQuizs = function(){
-    return utils.database.ref('/Quizs').val();
+    return new Promise((resolve) => {
+        var quizs = [];
+        utils.database.ref('/Quizs').once('value', (quiz) => {
+            quiz.forEach()
+        })
+    })
 };
 
 utils.playQuiz = function(){
@@ -66,18 +71,26 @@ utils.init = function(){
     console.log(utils.newUser('James','03/31/2000','678','james@test.net'));
 
 
+    utils.newQuiz('Quiz1',[
+        {question: "How are you?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]},
+        {question: "How art thou?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]},
+        {question: "How is it going?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]}
+    ],'-LlVDxVclo5S_6zhVkOb');
+
+    utils.newQuiz('Quiz2',[
+        {question: "How are you?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]},
+        {question: "How art thou?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]},
+        {question: "How is it going?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]}
+    ],'-LlVDxVclo5S_6zhVkOb')
+
     // utils.database.ref('/Users').push(hani);
     // utils.database.ref('/Users').push(tim);
     // utils.database.ref('/Users').push(james);
 
-    // var quiz1 = new Quiz();
-    // var quiz2 = new Quiz();
-    // var quiz3 = new Quiz();
 };
 
 utils.init();
 
-//
 // axios.post('https://us-central1-acmestudios-ca284.cloudfunctions.net/authenticateUser', {
 //     email: 'test',
 //     password: '123'
