@@ -10,7 +10,7 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-tile-title>Hani Rifai</v-list-tile-title>
+            <v-list-item-title>Hani Rifai</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -35,6 +35,15 @@
               <v-list-item-title>Log Out</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
+        <v-list-item @click="$router.push('/users')">
+          <v-list-item-action>
+            <v-icon>fas fa-user-friends</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>All Users</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
 
       </v-list>
 

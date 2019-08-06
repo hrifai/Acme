@@ -1,13 +1,21 @@
 <template>
   <div>
-    <v-layout justify-center align-center class="headline">Search Quiz's</v-layout>
+      <v-container grid-list-md>
+          <v-layout>
+              <v-flex xs8>
+                <v-layout justify-left class="headline pb-4">Search Quiz's</v-layout>
+              </v-flex>
+              <v-flex xs4>
+                    <v-text-field v-model="search" outlined shaped :loading="searching" label="Search"></v-text-field>
+              </v-flex>
+          </v-layout>
+      </v-container>
 
       <v-flex>
           <v-container grid-list-md>
               <v-layout row wrap>
                       <v-flex xs3 v-for="quiz in quizs" :key="quiz.key">
                             <button-card :img="quiz.img" :text="quiz.name"></button-card>
-                          <!--@click.native="showDialog(quiz.results)"-->
                       </v-flex>
               </v-layout>
           </v-container>
@@ -32,15 +40,10 @@
         components: {ButtonCard, ResultsCard},
         beforeMount(){
            this.loading = true;
-           // utils.getQuizs()
-           //     .then(collection => {
-           //         this.quizs = collection;
-           //         setTimeout(() => {this.loading = false;}, 2000);
-           //     });
             utils.database.ref('/Quizs').on('value', (snap) => {
                 this.quizs = [];
                 snap.forEach(quiz => {
-                    this.quizs.push(quiz.val())
+                    this.quizs.push(quiz.val());
                 });
                 setTimeout(() => {this.loading = false;}, 2000);
             })
@@ -53,9 +56,12 @@
         },
         data: () => ({
             quizs:[],
+            fab:true,
             loading:false,
             activeResults: {},
-            dialog: false
+            dialog: false,
+            search: "",
+            searching:false
         }),
     }
 </script>

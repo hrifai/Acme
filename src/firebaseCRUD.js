@@ -31,7 +31,7 @@ var Questions = function(question, options, img){
     this.img = img;
 };
 
-var Quiz = function(name, questions, owner,img = "https://www.civhc.org/wp-content/uploads/2018/10/question-mark.png"){
+var Quiz = function(name, questions, owner,img = "https://cdn.pixabay.com/photo/2017/03/07/13/02/question-mark-2123969__340.jpg"){
     this.name = name;
     this.questions = questions;
     this.owner = owner;
@@ -40,6 +40,14 @@ var Quiz = function(name, questions, owner,img = "https://www.civhc.org/wp-conte
 
 utils.database = app.database();
 
+utils.addResults = function(userKey, results){
+    var ref = utils.database.ref('/Users/'+userKey+'/results');
+    ref.once('value', (snap) => {
+        var current = snap.val();
+        current.push(results);
+        ref.set(current);
+    });
+};
 
 utils.newUser = function(name,dob,password,email){
     var user = new User(name, dob, password, email);
@@ -93,14 +101,7 @@ utils.init = function(){
 
 };
 
+// utils.init();
 
-// axios.post('https://us-central1-acmestudios-ca284.cloudfunctions.net/authenticateUser', {
-//     email: 'test',
-//     password: '123'
-// }).then(response => {
-//     console.log(response.data);
-// }).catch(error => {
-//     console.log(error);
-// });
 
 export default utils;
