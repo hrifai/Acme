@@ -71,6 +71,32 @@
             </v-card>
         </v-dialog>
 
+        <v-dialog width=350 v-model="validation">
+            <v-card>
+                <v-card-title>
+                    Please Fill Out All Fields Properly Before Saving
+                </v-card-title>
+                <v-card-actions>
+                    <v-layout>
+                        <v-btn color="red" @click="validation = false">Close</v-btn>
+                    </v-layout>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog width=350 v-model="done">
+            <v-card>
+                <v-card-title>
+                   User has been created.
+                </v-card-title>
+                <v-card-actions>
+                    <v-layout>
+                        <v-btn color="green" @click="done = false">Close</v-btn>
+                    </v-layout>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
 
     </div>
 </template>
@@ -92,9 +118,29 @@
                 },2000)
             },
             handleRegister(){
-                this.loading = true;
-                utils.newUser(this.fname + ' ' +this.lname,this.age,this.password,this.email)
-                this.registerDialog = false;
+                if(this.isValid()){
+                    this.loading = true;
+                    utils.newUser(this.fname + ' ' +this.lname,this.age,this.password,this.email)
+                    this.registerDialog = false;
+                    this.done = true;
+                    this.clearScreen();
+                    setTimeout(() => {this.loading = false}, 2000)
+                } else {
+                    this.registerDialog = false;
+                    this.validation = true;
+                }
+            },
+            clearScreen(){
+                this.fname = '';
+                this.lname = '';
+                this.age = '';
+                this.email = '';
+                this.password = '';
+            },
+            isValid(){
+              var isValidEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email);
+              var isValidName = /^[^0-9]+$/.test(this.fname) && /^[^0-9]+$/.test(this.lname)
+                return isValidEmail && isValidName
             }
         },
         data() {
@@ -102,11 +148,13 @@
               dialog:false,
               registerDialog:false,
               loading:false,
+              validation: false,
               fname: '',
               lname: '',
               age: '',
               email: '',
-              password: ''
+              password: '',
+              done: false
           }
         }
     }
