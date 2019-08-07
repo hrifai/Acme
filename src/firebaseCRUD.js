@@ -14,6 +14,8 @@ var app = firebase.initializeApp({
     appId: "1:198696009280:web:0599b40157a42a53"
 });
 
+utils.database = app.database();
+
 var User = function(name, dob, password, email){
     this.email = email;
     this.name = name;
@@ -25,20 +27,12 @@ var User = function(name, dob, password, email){
     }
 };
 
-var Questions = function(question, options, img){
-    this.question = question;
-    this.options = options;
-    this.img = img;
-};
-
 var Quiz = function(name, questions, owner,img = "https://cdn.pixabay.com/photo/2017/03/07/13/02/question-mark-2123969__340.jpg"){
     this.name = name;
     this.questions = questions;
     this.owner = owner;
     this.img = img;
 };
-
-utils.database = app.database();
 
 utils.addResults = function(userKey, results){
     var ref = utils.database.ref('/Users/'+userKey+'/results');
@@ -59,6 +53,10 @@ utils.newQuiz = function(name, questions, owner, img){
     var quiz = new Quiz(name, questions, owner, img);
     var reciept = utils.database.ref('/Quizs').push(quiz);
     return reciept.key;
+};
+
+utils.listenForQuiz = function(callback){
+    return utils.database.ref('/Quizs').on('value',callback);
 };
 
 utils.getQuizs = function(){

@@ -36,17 +36,18 @@
     import ButtonCard from "../components/button-card";
     import ResultsCard from "../components/results-card"
     import utils from '../firebaseCRUD';
+
     export default {
         components: {ButtonCard, ResultsCard},
         beforeMount(){
            this.loading = true;
-            utils.database.ref('/Quizs').on('value', (snap) => {
-                this.quizs = [];
-                snap.forEach(quiz => {
-                    this.quizs.push(quiz.val());
-                });
-                setTimeout(() => {this.loading = false;}, 2000);
-            })
+           utils.listenForQuiz((snap) => {
+                   this.quizs = [];
+                   snap.forEach(quiz => {
+                       this.quizs.push(quiz.val());
+                   });
+                   setTimeout(() => {this.loading = false;}, 2000);
+           })
         },
         methods: {
             showDialog(results) {

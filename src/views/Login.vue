@@ -34,22 +34,20 @@
                     <v-container grid-list-md>
                         <v-layout wrap>
                             <v-flex xs12 sm6 md6>
-                                <v-text-field label="First name" required></v-text-field>
+                                <v-text-field v-model="fname" label="First name" required></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md6>
-                                <v-text-field
-                                        label="Last name"
-                                        required
-                                ></v-text-field>
+                                <v-text-field  v-model="lname" label="Last name" required></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field label="Email" required></v-text-field>
+                                <v-text-field  v-model="email" label="Email" required></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field label="Password" type="password" required></v-text-field>
+                                <v-text-field  v-model="password" label="Password" type="password" required></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6>
                                 <v-select
+                                        v-model="age"
                                         :items="['0-17', '18-29', '30-54', '54+']"
                                         label="Age*"
                                         required
@@ -68,7 +66,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="registerDialog = false">Close</v-btn>
-                    <v-btn color="blue darken-1" text @click="registerDialog = false">Save</v-btn>
+                    <v-btn color="blue darken-1" text @click="handleRegister()">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -78,24 +76,37 @@
 </template>
 
 <script>
+
+    import utils from '../firebaseCRUD'
+
     export default {
         components: {},
         methods:{
             handleLogin(){
-                this.loading=true;
+                this.loading = true;
                 //checkAuth
                 //ifAuth then re route and place token
                 //ifNot then show error screen and warning
                 setTimeout(()=>{
                     this.loading=false
-                },4000)
+                },2000)
+            },
+            handleRegister(){
+                this.loading = true;
+                utils.newUser(this.fname + ' ' +this.lname,this.age,this.password,this.email)
+                this.registerDialog = false;
             }
         },
         data() {
           return {
               dialog:false,
               registerDialog:false,
-              loading:false
+              loading:false,
+              fname: '',
+              lname: '',
+              age: '',
+              email: '',
+              password: ''
           }
         }
     }

@@ -76,7 +76,7 @@
         data: () => ({
             drawer: false,
             menuItems:[
-                {text: "Menu", icon: "fa-home", route: "/"},
+                {text: "Menu", icon: "fa-home", route: "/home"},
                 {text: "View Quiz's", icon: "fa-dashboard", route: "/quizs"},
                 {text: "New Quiz", icon: "fa-plus", route: "/new-quiz"},
                 {text: "View Results", icon: "fa-book", route: "/results"},

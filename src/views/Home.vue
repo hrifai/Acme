@@ -4,7 +4,7 @@
         <v-container grid-list-md>
             <v-layout wrap>
                 <v-flex xs4>
-                     <button-card img="https://images.pexels.com/photos/239548/pexels-photo-239548.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" text="Start Existing Quiz"></button-card>
+                     <button-card img="https://images.pexels.com/photos/239548/pexels-photo-239548.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" text="Host A Quiz"></button-card>
                 </v-flex>
                 <v-flex xs4>
                     <button-card img="https://images.pexels.com/photos/1366942/pexels-photo-1366942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" text="Create New Quiz"></button-card>
