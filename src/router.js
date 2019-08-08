@@ -13,34 +13,33 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
       {
-          path: '/',
-          name: 'login',
-          component: Login
+        path: '/',
+        name: 'login',
+        component: Login
       },
       {
         path: '/home',
         name: 'home',
-        component: Home
+        component: Home,
+        props: true
       },
       {
         path: '/new-quiz',
         name: 'new-quiz',
-        component: NewQuiz
+        component: NewQuiz,
+        props: true
       },
       {
-          path: '/results',
-          name: 'results',
-          component: Results
+        path: '/results',
+        name: 'results',
+        component: Results,
+        props: true
       },
       {
-          path: '/login',
-          name: 'login',
-          component: Login
-      },
-      {
-          path: '/quizs',
-          name: 'quiz',
-          component: Quizs
+        path: '/quizs',
+        name: 'quiz',
+        component: Quizs,
+        props: true
       }
   ]
 })

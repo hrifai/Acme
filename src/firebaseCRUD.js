@@ -16,11 +16,13 @@ var app = firebase.initializeApp({
 
 utils.database = app.database();
 
-var User = function(name, dob, password, email){
+var User = function(fname,lname, dob, password, email){
     this.email = email;
-    this.name = name;
+    this.fname = fname;
+    this.lname = lname;
     this.dob = dob;
-    this.password = md5(password);
+    this.password = password;
+    // this.password = md5(password);
     this.logs = {
         login: [],
         logout: []
@@ -32,6 +34,36 @@ var Quiz = function(name, questions, owner,img = "https://cdn.pixabay.com/photo/
     this.questions = questions;
     this.owner = owner;
     this.img = img;
+};
+
+utils.auth = async function(email, password){
+
+    var authObj = {},
+        matched = [],
+        users = await utils.getUsers();
+
+    users.forEach((user) => {
+        if(user.email === email && user.password === password){
+            matched.push(user);
+        }
+    });
+
+    authObj.user = matched[0];
+    return authObj
+};
+
+utils.getUsers = function(){
+    return new Promise(resolve => {
+        var users = [];
+        utils.database.ref('/Users').once('value', (snap) => {
+            snap.forEach(user => {
+                var userObj = user.val();
+                userObj.key = user.key;
+                users.push(userObj);
+            });
+            resolve(users);
+        });
+    })
 };
 
 utils.addResults = function(userKey, results){
@@ -100,6 +132,5 @@ utils.init = function(){
 };
 
 // utils.init();
-
 
 export default utils;

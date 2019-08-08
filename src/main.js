@@ -5,15 +5,8 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
 
-window.Acme = new Vue({
+new Vue({
   router,
   vuetify,
   render: function (h) { return h(App) }
 }).$mount('#app');
-
-
-window.Acme.store = {
-    activeUserId: '',
-    userObj: {},
-    loggedInState: false
-};

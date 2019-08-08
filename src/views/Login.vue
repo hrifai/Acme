@@ -5,10 +5,10 @@
             <v-layout class="subheading justify-center align-center pb-5">Sign In</v-layout>
             <v-layout row justify-center align-center>
                 <v-flex xs4>
-                    <v-text-field label="Email"></v-text-field>
+                    <v-text-field v-model="logEmail" label="Email"></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                    <v-text-field label="Password" type="password"></v-text-field>
+                    <v-text-field v-model="logPass" label="Password" type="password"></v-text-field>
                 </v-flex>
             </v-layout>
             <v-layout row justify-center align-center>
@@ -97,6 +97,19 @@
             </v-card>
         </v-dialog>
 
+        <v-dialog width=350 v-model="unauth">
+            <v-card>
+                <v-card-title>
+                    User could not be found. Please try again.
+                </v-card-title>
+                <v-card-actions>
+                    <v-layout>
+                        <v-btn color="red" @click="unauth = false">Close</v-btn>
+                    </v-layout>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
 
     </div>
 </template>
@@ -108,11 +121,14 @@
     export default {
         components: {},
         methods:{
-            handleLogin(){
+            async handleLogin(){
                 this.loading = true;
-                //checkAuth
-                //ifAuth then re route and place token
-                //ifNot then show error screen and warning
+                var auth = await utils.auth(this.logEmail, this.logPass);
+                if(auth.user !== undefined){
+                    this.setSession(auth.user)
+                } else {
+                    this.unauth = true;
+                }
                 setTimeout(()=>{
                     this.loading=false
                 },2000)
@@ -120,7 +136,7 @@
             handleRegister(){
                 if(this.isValid()){
                     this.loading = true;
-                    utils.newUser(this.fname + ' ' +this.lname,this.age,this.password,this.email)
+                    utils.newUser(this.fname ,this.lname,this.age,this.password,this.email)
                     this.registerDialog = false;
                     this.done = true;
                     this.clearScreen();
@@ -129,6 +145,12 @@
                     this.registerDialog = false;
                     this.validation = true;
                 }
+            },
+            setSession(user){
+              Acme.store.activeUserId = user.key;
+              Acme.store.loggedInState = true;
+              this.$parent.$parent.$parent.$emit('login', user);
+              this.$router.push('/home')
             },
             clearScreen(){
                 this.fname = '';
@@ -154,6 +176,9 @@
               age: '',
               email: '',
               password: '',
+              logEmail: '',
+              logPass: '',
+              unauth: false,
               done: false
           }
         }

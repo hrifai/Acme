@@ -108,9 +108,6 @@
                         filled = false;
                     }
                 });
-
-                console.log(titleFilled, filled);
-
                 return titleFilled && filled;
             },
             removeQuestion(index){

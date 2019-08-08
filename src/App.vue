@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app clipped>
+    <v-navigation-drawer v-if="loggedIn" v-model="drawer" app clipped>
 
       <v-list dense>
 
@@ -52,13 +52,13 @@
     <v-content>
       <v-layout align-center justify-center fill-height>
         <v-container>
-          <router-view></router-view>
+          <router-view :activeUser="activeUser"></router-view>
         </v-container>
       </v-layout>
     </v-content>
 
     <v-app-bar app clipped-left>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="loggedIn" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Acme Studios.</v-toolbar-title>
     </v-app-bar>
 
@@ -75,6 +75,8 @@
         },
         data: () => ({
             drawer: false,
+            loggedIn: false,
+            activeUser: {},
             menuItems:[
                 {text: "Menu", icon: "fa-home", route: "/home"},
                 {text: "View Quiz's", icon: "fa-dashboard", route: "/quizs"},
@@ -84,7 +86,22 @@
             ]
         }),
         created () {
-            this.$vuetify.theme.dark = true
+            this.$on('login', (user) => {
+                console.log('gotcha');
+              this.activeUser = user;
+              this.loggedIn = true;
+            });
+
+            this.$vuetify.theme.dark = true;
+            window.Acme = window.Acme || {};
+            window.Acme.store = window.Acme.store || {
+                activeUserId: '',
+                userObj: {},
+                loggedInState: false
+            };
         },
+        methods: {
+
+        }
     }
 </script>
