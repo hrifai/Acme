@@ -5,6 +5,7 @@ import NewQuiz from './views/New-Quiz'
 import Results from './views/Results'
 import Login from './views/Login'
 import Quizs from './views/ViewQuiz'
+import Settings from './views/Settings'
 
 Vue.use(Router);
 
@@ -40,6 +41,12 @@ export default new Router({
         name: 'quiz',
         component: Quizs,
         props: true
+      },
+      {
+          path: '/settings',
+          name: 'settings',
+          component: Settings,
+          props: true
       }
   ]
 })

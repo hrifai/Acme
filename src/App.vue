@@ -10,7 +10,7 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>Hani Rifai</v-list-item-title>
+            <v-list-item-title>{{activeUser.fname}} {{activeUser.lname}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -27,7 +27,7 @@
 
         <v-spacer></v-spacer>
 
-        <v-list-item class="mt-3">
+        <v-list-item class="mt-3" @click="logOut()">
             <v-list-item-action>
               <v-icon>fa-sign-in</v-icon>
             </v-list-item-action>
@@ -69,6 +69,8 @@
 </template>
 
 <script>
+  import utils from './firebaseCRUD'
+
     export default {
         props: {
             source: String,
@@ -87,7 +89,6 @@
         }),
         created () {
             this.$on('login', (user) => {
-                console.log('gotcha');
               this.activeUser = user;
               this.loggedIn = true;
             });
@@ -101,7 +102,16 @@
             };
         },
         methods: {
-
+          logOut(){
+              utils.log(this.activeUser.key, 'Log out');
+              this.loggedIn = false;
+              window.Acme.store = {
+                  activeUserId: '',
+                  userObj: {},
+                  loggedInState: false
+              };
+              this.$router.push('/')
+          }
         }
     }
 </script>

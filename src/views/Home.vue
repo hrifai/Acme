@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-layout class="headline justify-center align-center pb-3">Acme Studios Quiz.</v-layout>
+        <v-layout class="justify-center align-center"><small>Welcome Back {{activeUser.fname}}</small></v-layout>
         <v-container grid-list-md>
             <v-layout wrap>
                 <v-flex xs4>
@@ -38,6 +39,9 @@
                 row1: [],
             }
           }
+        },
+        props:{
+            activeUser: Object
         }
     }
 </script>

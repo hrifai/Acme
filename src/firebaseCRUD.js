@@ -21,15 +21,15 @@ var User = function(fname,lname, dob, password, email){
     this.fname = fname;
     this.lname = lname;
     this.dob = dob;
-    this.password = password;
-    // this.password = md5(password);
-    this.logs = {
-        login: [],
-        logout: []
-    }
+    this.isAdmin = false;
+    this.password = md5(password);
+    this.logs = [{
+        time: new Date().toDateString(),
+        type: 'Account Created'
+    }];
 };
 
-var Quiz = function(name, questions, owner,img = "https://cdn.pixabay.com/photo/2017/03/07/13/02/question-mark-2123969__340.jpg"){
+var Quiz = function(name, questions, owner, img = "https://cdn.pixabay.com/photo/2017/03/07/13/02/question-mark-2123969__340.jpg"){
     this.name = name;
     this.questions = questions;
     this.owner = owner;
@@ -43,13 +43,27 @@ utils.auth = async function(email, password){
         users = await utils.getUsers();
 
     users.forEach((user) => {
-        if(user.email === email && user.password === password){
+        if(user.email === email && user.password === md5(password)){
             matched.push(user);
         }
     });
 
     authObj.user = matched[0];
     return authObj
+};
+
+utils.log = function(userKey, type){
+
+    var log = {
+        time: new Date().toDateString(),
+        type: type
+    };
+    var logRef = utils.database.ref('/Users/'+userKey+'/logs');
+    logRef.once('value', (snap) => {
+        var logArray = snap.val();
+        logArray.push(log);
+        logRef.set(logArray);
+    });
 };
 
 utils.getUsers = function(){
@@ -75,8 +89,8 @@ utils.addResults = function(userKey, results){
     });
 };
 
-utils.newUser = function(name,dob,password,email){
-    var user = new User(name, dob, password, email);
+utils.newUser = function(fname,lname,dob,password,email){
+    var user = new User(fname,lname, dob, password, email);
     var reciept = utils.database.ref('/Users').push(user);
     return reciept.key;
 };
@@ -89,6 +103,10 @@ utils.newQuiz = function(name, questions, owner, img){
 
 utils.listenForQuiz = function(callback){
     return utils.database.ref('/Quizs').on('value',callback);
+};
+
+utils.listenForUserUpdate = function(userkey, callback){
+    return utils.database.ref('/Users/'+userkey).on('value',callback);
 };
 
 utils.getQuizs = function(){
@@ -106,31 +124,5 @@ utils.getQuizs = function(){
 utils.playQuiz = function(){
 
 };
-
-utils.init = function(){
-    console.log(utils.newUser('Hani','03/31/2000','123','hani@rifai.net'));
-    console.log(utils.newUser('Tim','03/31/2000','345','tim@test.net'));
-    console.log(utils.newUser('James','03/31/2000','678','james@test.net'));
-
-
-    utils.newQuiz('Quiz1',[
-        {question: "How are you?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]},
-        {question: "How art thou?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]},
-        {question: "How is it going?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]}
-    ],'-LlVDxVclo5S_6zhVkOb');
-
-    utils.newQuiz('Quiz2',[
-        {question: "How are you?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]},
-        {question: "How art thou?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]},
-        {question: "How is it going?", answers: [{a: "yes", correct: false},{a: "no", correct: false},{a: "maybe", correct: true},{a: "don't ask", correct: false}]}
-    ],'-LlVDxVclo5S_6zhVkOb')
-
-    // utils.database.ref('/Users').push(hani);
-    // utils.database.ref('/Users').push(tim);
-    // utils.database.ref('/Users').push(james);
-
-};
-
-// utils.init();
 
 export default utils;

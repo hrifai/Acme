@@ -125,7 +125,8 @@
                 this.loading = true;
                 var auth = await utils.auth(this.logEmail, this.logPass);
                 if(auth.user !== undefined){
-                    this.setSession(auth.user)
+                    this.setSession(auth.user);
+                    utils.log(auth.user.key, 'Log in');
                 } else {
                     this.unauth = true;
                 }
@@ -136,7 +137,7 @@
             handleRegister(){
                 if(this.isValid()){
                     this.loading = true;
-                    utils.newUser(this.fname ,this.lname,this.age,this.password,this.email)
+                    utils.newUser(this.fname ,this.lname,this.age,this.password,this.email);
                     this.registerDialog = false;
                     this.done = true;
                     this.clearScreen();
