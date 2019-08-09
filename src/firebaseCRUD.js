@@ -125,4 +125,8 @@ utils.playQuiz = function(){
 
 };
 
+utils.getUserResults = function(userKey){
+    utils.database.ref('/Users/'+userKey+'/results').once('val')
+};
+
 export default utils;

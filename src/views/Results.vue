@@ -13,7 +13,7 @@
       </v-flex>
 
       <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-          <results-card :results="activeResults"></results-card>
+            <results-card :results="activeResults"></results-card>
       </v-dialog>
 
   </div>

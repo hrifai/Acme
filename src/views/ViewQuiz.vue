@@ -15,7 +15,7 @@
           <v-container grid-list-md>
               <v-layout row wrap>
                       <v-flex xs3 v-for="quiz in quizs" :key="quiz.key">
-                            <button-card :img="quiz.img" :text="quiz.name"></button-card>
+                            <button-card @click.native="showDialog(quiz)" :img="quiz.img" :text="quiz.name"></button-card>
                       </v-flex>
               </v-layout>
           </v-container>
@@ -26,7 +26,18 @@
       </v-overlay>
 
       <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-          <results-card :results="activeResults"></results-card>
+                <v-card>
+                    <v-toolbar dark >
+                        <v-toolbar-title>Quiz Preview</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                        <v-toolbar-items>
+                            <v-btn dark text @click="$parent.$parent.$parent.dialog = false">Close</v-btn>
+                        </v-toolbar-items>
+                    </v-toolbar>
+                    <v-layout justify-center align-center>
+                        <v-card-title>{{activeQuiz.name}} - Questions</v-card-title>
+                    </v-layout>
+                </v-card>
       </v-dialog>
 
   </div>
@@ -50,8 +61,8 @@
            })
         },
         methods: {
-            showDialog(results) {
-                this.activeResults = results;
+            showDialog(quiz) {
+                this.activeQuiz = quiz;
                 this.dialog = true;
             }
         },
@@ -59,7 +70,7 @@
             quizs:[],
             fab:true,
             loading:false,
-            activeResults: {},
+            activeQuiz: {},
             dialog: false,
             search: "",
             searching:false

@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-toolbar dark color="purple">
+        <v-toolbar dark>
             <v-toolbar-title>Results</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
