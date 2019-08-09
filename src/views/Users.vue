@@ -3,7 +3,7 @@
       <v-container grid-list-md>
           <v-layout>
               <v-flex xs8>
-                <v-layout justify-left class="headline pb-4">Search Quiz's</v-layout>
+                <v-layout justify-left class="headline pb-4">All User's</v-layout>
               </v-flex>
               <v-flex xs4>
                     <v-text-field v-model="search" outlined shaped :loading="searching" label="Search"></v-text-field>
@@ -14,8 +14,8 @@
       <v-flex>
           <v-container grid-list-md>
               <v-layout row wrap>
-                      <v-flex xs3 v-for="quiz in quizs" :key="quiz.key">
-                            <button-card :img="quiz.img" :text="quiz.name"></button-card>
+                      <v-flex xs3 v-for="user in users" :key="user.key">
+                          <v-btn @click="showDialog(user)">{{user.fname}} {{user.lname}}</v-btn>
                       </v-flex>
               </v-layout>
           </v-container>
@@ -25,41 +25,41 @@
           <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
 
-      <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-          <results-card :results="activeResults"></results-card>
+      <v-dialog v-model="dialog" hide-overlay transition="dialog-bottom-transition">
+          <v-card class="pa-4">
+            <user-profile :user="activeUser"></user-profile>
+          </v-card>
       </v-dialog>
 
   </div>
 </template>
 
 <script>
-    import ButtonCard from "../components/button-card";
-    import ResultsCard from "../components/results-card"
     import utils from '../firebaseCRUD';
+    import UserProfile from "../components/user-profile";
 
     export default {
-        components: {ButtonCard, ResultsCard},
+        components: {UserProfile},
         beforeMount(){
            this.loading = true;
-            utils.database.ref('/Quizs').on('value', (snap) => {
-                this.quizs = [];
-                snap.forEach(quiz => {
-                    this.quizs.push(quiz.val());
+            utils.database.ref('/Users').on('value', (snap) => {
+                this.users = [];
+                snap.forEach(user => {
+                    this.users.push(user.val());
                 });
                 setTimeout(() => {this.loading = false;}, 2000);
             })
         },
         methods: {
-            showDialog(results) {
-                this.activeResults = results;
+            showDialog(user){
+                this.activeUser = user;
                 this.dialog = true;
             }
         },
         data: () => ({
-            quizs:[],
-            fab:true,
+            users:[],
             loading:false,
-            activeResults: {},
+            activeUser: {},
             dialog: false,
             search: "",
             searching:false
