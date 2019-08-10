@@ -68,6 +68,12 @@
   </v-app>
 </template>
 
+<style>
+    .v-dialog {
+        overflow-y: unset !important;
+    }
+</style>
+
 <script>
   import utils from './firebaseCRUD'
 

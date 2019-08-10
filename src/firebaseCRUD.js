@@ -125,6 +125,22 @@ utils.playQuiz = function(){
 
 };
 
+utils.deleteUser = function(user){
+    var key = user.key;
+    console.log(key);
+    var userRef = utils.database.ref('/Users/'+key);
+    return userRef.remove();
+};
+
+utils.saveUserData = function(user, password){
+    if(!!password){
+        user.password = md5(password)
+    }
+    var key = user.key;
+    var userRef = utils.database.ref('/Users/'+key);
+    return userRef.set(user);
+};
+
 utils.getUserResults = function(userKey){
     utils.database.ref('/Users/'+userKey+'/results').once('val')
 };

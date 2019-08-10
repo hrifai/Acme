@@ -27,12 +27,19 @@
 
       <v-dialog v-model="dialog" hide-overlay transition="dialog-bottom-transition">
           <v-card class="pa-4">
+              <v-card-actions>
+                  <v-btn @click="dialog = false" fab absolute top right><v-icon>fa-close</v-icon></v-btn>
+              </v-card-actions>
             <user-profile :user="activeUser"></user-profile>
           </v-card>
       </v-dialog>
 
   </div>
 </template>
+
+<style>
+
+</style>
 
 <script>
     import utils from '../firebaseCRUD';
@@ -41,11 +48,17 @@
     export default {
         components: {UserProfile},
         beforeMount(){
+            this.$on('closeUser', () => {
+                this.dialog = false;
+            });
+
            this.loading = true;
             utils.database.ref('/Users').on('value', (snap) => {
                 this.users = [];
                 snap.forEach(user => {
-                    this.users.push(user.val());
+                    var u = user.val();
+                    u.key = user.key;
+                    this.users.push(u);
                 });
                 setTimeout(() => {this.loading = false;}, 2000);
             })
