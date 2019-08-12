@@ -36,14 +36,28 @@
             </v-list-item-content>
           </v-list-item>
 
+          <v-spacer></v-spacer>
+          <v-divider></v-divider>
+          <v-layout justify-left class="pt-3 pl-4 pb-3 v-subheader">Admin Settings</v-layout>
+          <v-spacer></v-spacer>
+
         <v-list-item @click="$router.push('/users')">
           <v-list-item-action>
             <v-icon>fas fa-user-friends</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>All Users</v-list-item-title>
+            <v-list-item-title>Manage Users</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+          <v-list-item @click="$router.push('/quiz-manager')">
+              <v-list-item-action>
+                  <v-icon>fa-question</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                  <v-list-item-title>Manage Quizs</v-list-item-title>
+              </v-list-item-content>
+          </v-list-item>
 
       </v-list>
 
@@ -110,6 +124,7 @@
         methods: {
           logOut(){
               utils.log(this.activeUser.key, 'Log out');
+              localStorage.loggedInState = false;
               this.loggedIn = false;
               window.Acme.store = {
                   activeUserId: '',

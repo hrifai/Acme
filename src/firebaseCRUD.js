@@ -29,6 +29,10 @@ var User = function(fname,lname, dob, password, email){
     }];
 };
 
+var Session = function(quiz,host){
+
+};
+
 var Quiz = function(name, questions, owner, img = "https://cdn.pixabay.com/photo/2017/03/07/13/02/question-mark-2123969__340.jpg"){
     this.name = name;
     this.questions = questions;

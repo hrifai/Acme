@@ -7,7 +7,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="log in logs" :key="log">
+        <tr v-for="log in logs" :key="JSON.stringify(log)">
             <td>{{ log.time }}</td>
             <td>{{ log.type }}</td>
         </tr>

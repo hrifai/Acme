@@ -26,25 +26,7 @@
       </v-overlay>
 
       <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-                <v-card>
-                    <v-img class="white--text" height="200px" :src="activeQuiz.img">
-                        <v-overlay absolute color="#000">
-                            <v-layout justify-center align-center fill-height>
-                                <v-card-title>{{activeQuiz.name}} - Questions</v-card-title>
-                            </v-layout>
-                        </v-overlay>
-                    </v-img>
-                    <v-toolbar dark>
-                        <v-toolbar-title>Quiz Preview</v-toolbar-title>
-                        <v-spacer></v-spacer>
-                        <v-toolbar-items>
-                            <v-btn dark text @click="dialog = false" color="green">Start Quiz<v-icon class="pl-3">fa-play-circle</v-icon></v-btn>
-                            <!--<v-btn dark text @click="$parent.$parent.$parent.dialog = false">Close</v-btn>-->
-                            <v-btn dark text @click="dialog = false">Exit</v-btn>
-                        </v-toolbar-items>
-                    </v-toolbar>
-
-                </v-card>
+        <quiz-profile :activeQuiz="activeQuiz"></quiz-profile>
       </v-dialog>
 
   </div>
@@ -52,11 +34,12 @@
 
 <script>
     import ButtonCard from "../components/button-card";
-    import ResultsCard from "../components/results-card"
+    import ResultsCard from "../components/results-card";
+    import QuizProfile from '../components/quiz-profile';
     import utils from '../firebaseCRUD';
 
     export default {
-        components: {ButtonCard, ResultsCard},
+        components: {QuizProfile, ButtonCard, ResultsCard},
         beforeMount(){
            this.loading = true;
            utils.listenForQuiz((snap) => {

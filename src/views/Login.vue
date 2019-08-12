@@ -53,13 +53,13 @@
                                         required
                                 ></v-select>
                             </v-flex>
-                            <v-flex xs12 sm6>
-                                <v-autocomplete
-                                        :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                                        label="Interests"
-                                        multiple
-                                ></v-autocomplete>
-                            </v-flex>
+                            <!--<v-flex xs12 sm6>-->
+                                <!--<v-autocomplete-->
+                                        <!--:items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"-->
+                                        <!--label="Interests"-->
+                                        <!--multiple-->
+                                <!--&gt;</v-autocomplete>-->
+                            <!--</v-flex>-->
                         </v-layout>
                     </v-container>
                 </v-card-text>
@@ -150,6 +150,8 @@
             setSession(user){
               Acme.store.activeUserId = user.key;
               Acme.store.loggedInState = true;
+              localStorage.loggedInState = true;
+              Acme.store.userObj = user;
               this.$parent.$parent.$parent.$emit('login', user);
               this.$router.push('/home')
             },
